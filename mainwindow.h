@@ -15,8 +15,17 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void digitClicked();
+    void clearClicked();
+    void clearEntryClicked();
+
 private:
     Ui::MainWindow *ui;
+
+    bool waitingForOperand;
+    double previousNumber;
+    QString currentOperator;
 
 };
 #endif // MAINWINDOW_H
