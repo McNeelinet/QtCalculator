@@ -19,6 +19,8 @@ private slots:
     void digitClicked();
     void clearClicked();
     void clearEntryClicked();
+    void binaryClicked();
+    void resultClicked();
 
 private:
     Ui::MainWindow *ui;
