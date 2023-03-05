@@ -20,6 +20,7 @@ private slots:
     void clearClicked();
     void clearEntryClicked();
     void binaryClicked();
+    void unaryClicked();
     void resultClicked();
 
 private:

@@ -32,7 +32,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout" rowstretch="1,2,5" columnstretch="3,2">
+   <layout class="QGridLayout" name="gridLayout" rowstretch="3,2,2,10" columnstretch="3,2">
     <item row="0" column="0" colspan="2">
      <widget class="QLineEdit" name="le_display">
       <property name="sizePolicy">
@@ -76,7 +76,7 @@
       </property>
      </widget>
     </item>
-    <item row="2" column="0">
+    <item row="3" column="0">
      <layout class="QGridLayout" name="glo_digits">
       <property name="rightMargin">
        <number>5</number>
@@ -226,7 +226,69 @@
       </item>
      </layout>
     </item>
-    <item row="2" column="1">
+    <item row="1" column="0" colspan="2">
+     <layout class="QGridLayout" name="glo_memory">
+      <property name="topMargin">
+       <number>5</number>
+      </property>
+      <property name="bottomMargin">
+       <number>5</number>
+      </property>
+      <item row="0" column="1">
+       <widget class="QPushButton" name="btn_mem_mr">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>MR</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QPushButton" name="btn_mem_plus">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>M+</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QPushButton" name="btn_mem_mc">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>MC</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <widget class="QPushButton" name="btn_mem_minus">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>M-</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="3" column="1">
      <layout class="QGridLayout" name="glo_operations">
       <property name="leftMargin">
        <number>5</number>
@@ -363,15 +425,9 @@
       </item>
      </layout>
     </item>
-    <item row="1" column="0" colspan="2">
-     <layout class="QGridLayout" name="glo_special">
-      <property name="topMargin">
-       <number>5</number>
-      </property>
-      <property name="bottomMargin">
-       <number>5</number>
-      </property>
-      <item row="1" column="0">
+    <item row="2" column="0" colspan="2">
+     <layout class="QGridLayout" name="glo_trigonometry">
+      <item row="0" column="0">
        <widget class="QPushButton" name="btn_sin">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
@@ -384,20 +440,7 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="1">
-       <widget class="QPushButton" name="btn_mem_mr">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>MR</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="2">
+      <item row="0" column="2">
        <widget class="QPushButton" name="btn_tan">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
@@ -410,46 +453,7 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="2">
-       <widget class="QPushButton" name="btn_mem_plus">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>M+</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="3">
-       <widget class="QPushButton" name="btn_cot">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>cot</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QPushButton" name="btn_mem_mc">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>MC</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
+      <item row="0" column="1">
        <widget class="QPushButton" name="btn_cos">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
@@ -463,7 +467,7 @@
        </widget>
       </item>
       <item row="0" column="3">
-       <widget class="QPushButton" name="btn_mem_minus">
+       <widget class="QPushButton" name="btn_cot">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
           <horstretch>0</horstretch>
@@ -471,7 +475,7 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>M-</string>
+         <string>cot</string>
         </property>
        </widget>
       </item>

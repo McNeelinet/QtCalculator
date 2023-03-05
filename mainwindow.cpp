@@ -1,5 +1,7 @@
 ﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "unary_operations.h"
+#include "binary_operations.h"
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -22,17 +24,24 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->btn_minus, SIGNAL(clicked()), this, SLOT(binaryClicked()));
     connect(ui->btn_multiplication, SIGNAL(clicked()), this, SLOT(binaryClicked()));
     connect(ui->btn_division, SIGNAL(clicked()), this, SLOT(binaryClicked()));
-
-    // ровно
     connect(ui->btn_equal, SIGNAL(clicked()), this, SLOT(resultClicked()));
+
+    // унарные
+    for (int i = 0; i < ui->glo_trigonometry->count(); i++)
+        connect(ui->glo_trigonometry->itemAt(i)->widget(), SIGNAL(clicked()), this, SLOT(unaryClicked()));
+    connect(ui->btn_inverse, SIGNAL(clicked()), this, SLOT(unaryClicked()));
+    connect(ui->btn_sqrt, SIGNAL(clicked()), this, SLOT(unaryClicked()));
+    connect(ui->btn_sign, SIGNAL(clicked()), this, SLOT(unaryClicked()));
 }
 
 QString correctNumber(QString number)
 {
     if (number == ".")
         number = "0.";
+    else if (number == "-.")
+        number = "-0.";
     else if (number == "00")
-        number.chop(1);
+        number = "0";
     else if (number.count('.') > 1)
         number.chop(1);
 
@@ -45,15 +54,17 @@ void MainWindow::digitClicked()
     QLineEdit* display = ui->le_display;
     QString number;
 
-    if (waitingForOperand)
+    if (this->waitingForOperand || display->text() == "0")
         number = "";
+    else if (display->text() == "-0")
+        number = "-";
     else
         number = display->text();
-    number += button->text();
 
+    number += button->text();
     number = correctNumber(number);
 
-    if (waitingForOperand && button->text() != "0")
+    if (waitingForOperand)
         waitingForOperand = false;
 
     if (number != display->text())
@@ -75,47 +86,41 @@ void MainWindow::clearEntryClicked()
     this->waitingForOperand = true;
 }
 
-double calculate(double operrand1, double operrand2, QString operation)
+double calculateBinary(double operrand1, double operrand2, QString operation)
 {
     if (operation == "*")
-        return operrand1 * operrand2;
+        return opMultiplication(operrand1, operrand2);
     else if (operation == "/")
-        return operrand1 / operrand2;
+        return opDivision(operrand1, operrand2);
     else if (operation == "+")
-        return operrand1 + operrand2;
+        return opAddition(operrand1, operrand2);
     else if (operation == "-")
-        return operrand1 - operrand2;
+        return opSubstraction(operrand1, operrand2);
     else return operrand2;
 }
 
-void MainWindow::binaryClicked()
+double calculateUnary(double operrand, QString operation)
 {
-    QPushButton* button = qobject_cast<QPushButton*>(sender());
-
-    if (this->waitingForOperand)
-        this->previousNumber = ui->le_display->text().toDouble();
-    else {
-        double result = calculate(this->previousNumber, ui->le_display->text().toDouble(), this->currentOperator);
-        QString formatedResult = QString::number(result, 'f', 15);
-
-        if (formatedResult.contains('.')) {
-            while(formatedResult.back() =='0')
-                formatedResult.chop(1);
-            if(formatedResult.back() =='.')
-                formatedResult.chop(1);
-        }
-
-        this->previousNumber = result;
-        ui->le_display->setText(formatedResult);
-    }
-
-    this->currentOperator = button->text();
-    this->waitingForOperand = true;
+    if (operation == "sin")
+        return opSin(operrand);
+    else if (operation == "cos")
+        return opCos(operrand);
+    else if (operation == "tan")
+        return opTan(operrand);
+    else if (operation == "cot")
+        return opCot(operrand);
+    else if (operation == "1/x")
+        return opInversion(operrand);
+    else if (operation == "√")
+        return opSquareRoot(operrand);
+    else if (operation == "-/+")
+        return opChangeSign(operrand);
+    else
+        return operrand;
 }
 
-void MainWindow::resultClicked()
+QString toDisplayFormat(double result)
 {
-    double result = calculate(this->previousNumber, ui->le_display->text().toDouble(), this->currentOperator);
     QString formatedResult = QString::number(result, 'f', 15);
 
     if (formatedResult.contains('.')) {
@@ -125,10 +130,47 @@ void MainWindow::resultClicked()
             formatedResult.chop(1);
     }
 
-    ui->le_display->setText(formatedResult);
+    return formatedResult;
+}
+
+void MainWindow::unaryClicked()
+{
+    QPushButton* button = qobject_cast<QPushButton*>(sender());
+
+    double result = calculateUnary(ui->le_display->text().toDouble(), button->text());
+
+    ui->le_display->setText(toDisplayFormat(result));
+
+    if (button->text() != "-/+")
+        this->waitingForOperand = true;
+}
+
+void MainWindow::binaryClicked()
+{
+    QPushButton* button = qobject_cast<QPushButton*>(sender());
+
+    if (this->waitingForOperand)
+        this->previousNumber = ui->le_display->text().toDouble();
+    else {
+        double result = calculateBinary(this->previousNumber, ui->le_display->text().toDouble(), this->currentOperator);
+
+        this->previousNumber = result;
+        ui->le_display->setText(toDisplayFormat(result));
+    }
+
+    this->currentOperator = button->text();
+    this->waitingForOperand = true;
+}
+
+void MainWindow::resultClicked()
+{
+    double result = calculateBinary(this->previousNumber, ui->le_display->text().toDouble(), this->currentOperator);
+
+    ui->le_display->setText(toDisplayFormat(result));
 
     this->previousNumber = 0;
-    this->currentOperator = "";
+    this->waitingForOperand = true;
+    this->currentOperator = "+";
 }
 
 MainWindow::~MainWindow()
