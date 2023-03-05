@@ -26,6 +26,8 @@ private slots:
 private:
     Ui::MainWindow *ui;
 
+    void resizeEvent(QResizeEvent* event);
+
     bool waitingForOperand;
     double previousNumber;
     QString currentOperator;

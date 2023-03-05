@@ -3,6 +3,11 @@
 #include "unary_operations.h"
 #include "binary_operations.h"
 
+const double BTN_FONT_WIDTH_K = 4.8;
+const double BTN_FONT_HEIGHT_K = 3.6;
+const double LE_FONT_WIDTH_K = 6;
+const double LE_FONT_HEIGHT_K = 26;
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow),
@@ -32,6 +37,39 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->btn_inverse, SIGNAL(clicked()), this, SLOT(unaryClicked()));
     connect(ui->btn_sqrt, SIGNAL(clicked()), this, SLOT(unaryClicked()));
     connect(ui->btn_sign, SIGNAL(clicked()), this, SLOT(unaryClicked()));
+}
+
+void changeFontOnButtons(QLayout* layout)
+{
+    for (int i = 0; i < layout->count(); i++) {
+        QPushButton* button = qobject_cast<QPushButton*>(layout->itemAt(i)->widget());
+
+        if (button != NULL) {
+            QFont font = button->font();
+            font.setPointSizeF(qMin(button->width() / BTN_FONT_WIDTH_K, button->height() / BTN_FONT_HEIGHT_K));
+
+            button->setFont(font);
+        }
+    }
+}
+
+void changeFontOnDisplay(QLineEdit* lineEdit)
+{
+    QFont font = lineEdit->font();
+    font.setPointSizeF(qMin(lineEdit->height() / LE_FONT_WIDTH_K, lineEdit->width() / LE_FONT_HEIGHT_K));
+
+    lineEdit->setFont(font);
+}
+
+void MainWindow::resizeEvent(QResizeEvent *event)
+{
+    changeFontOnButtons(ui->glo_digits);
+    changeFontOnButtons(ui->glo_operations);
+    changeFontOnButtons(ui->glo_binary);
+    changeFontOnButtons(ui->glo_memory);
+    changeFontOnButtons(ui->glo_trigonometry);
+
+    changeFontOnDisplay(ui->le_display);
 }
 
 QString correctNumber(QString number)
