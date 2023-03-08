@@ -478,7 +478,7 @@
        </layout>
       </item>
       <item row="0" column="1">
-       <widget class="QPushButton" name="btn_del">
+       <widget class="QPushButton" name="btn_clear_entry">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
           <horstretch>0</horstretch>
@@ -486,7 +486,7 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>Del</string>
+         <string>CE</string>
         </property>
         <property name="shortcut">
          <string>Backspace</string>

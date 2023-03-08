@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QDoubleValidator>
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -17,20 +19,22 @@ public:
 
 private slots:
     void digitClicked();
+    void signClicked();
     void clearClicked();
     void clearEntryClicked();
+    void resultClicked();
     void binaryClicked();
     void unaryClicked();
-    void resultClicked();
 
 private:
     Ui::MainWindow *ui;
 
     void resizeEvent(QResizeEvent* event);
+    void logicErrorAction(const char* what);
+    void lengthErrorAction(const char* what);
 
     bool waitingForOperand;
     double previousNumber;
     QString currentOperator;
-
 };
 #endif // MAINWINDOW_H
