@@ -17,10 +17,8 @@ set(PROJECT_SOURCES
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui
-        binary_operations.cpp
-        binary_operations.h
-        unary_operations.cpp
-        unary_operations.h
+        operations.cpp
+        operations.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
