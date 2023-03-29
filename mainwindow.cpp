@@ -11,10 +11,8 @@ const double LE_FONT_HEIGHT_K = 26;
 
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow)
-    , memoryEnabled(false), memoryCell(0),
-      waitingForOperand(true), previousNumber(0),
-      currentOperator("")
+    : QMainWindow(parent), ui(new Ui::MainWindow), memoryEnabled(false), memoryCell(0),
+      waitingForOperand(true), previousNumber(0), currentOperator("")
 {
     ui->setupUi(this);
 
@@ -45,6 +43,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->btn_result, SIGNAL(clicked()), this, SLOT(resultClicked()));
 }
 
+
+
+/*========== Обработка ошибок ==========*/
 void MainWindow::logicErrorAction(const char* what)
 {
     QMessageBox::critical(qobject_cast<QMainWindow*>(parent()), "Арифметическая ошибка", what);
@@ -52,7 +53,8 @@ void MainWindow::logicErrorAction(const char* what)
 }
 
 
-// Изменение размеров
+
+/*========= Изменение размеров =========*/
 void changeFontOnButtons(QLayout* layout)
 {
     for (int i = 0; i < layout->count(); i++) {
@@ -87,7 +89,8 @@ void MainWindow::resizeEvent(QResizeEvent *event)
 }
 
 
-// Ввод чисел
+
+/*========== Ввод-вывод чисел ==========*/
 QString toDisplayFormat(double result)
 {
     QString formatedResult = QString::number(result, 'f', 15);
@@ -157,7 +160,16 @@ void MainWindow::clearEntryClicked()
 {
     ui->le_display->setText("0");
 
+<<<<<<< HEAD
     this->waitingForOperand = true;
+=======
+    if (number == "-")
+        number = "-0";
+    else if (number == "")
+        number = "0";
+
+    ui->le_display->setText(number);
+>>>>>>> 0e2108a (прибрался. waitingForOperrand - рудимент?)
 }
 
 void MainWindow::clearClicked()
@@ -171,8 +183,13 @@ void MainWindow::clearClicked()
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 // Операции с памятью
+=======
+
+/*========= Операции с памятью =========*/
+>>>>>>> 0e2108a (прибрался. waitingForOperrand - рудимент?)
 void MainWindow::memoryClearClicked()
 {
     this->memoryEnabled = false;
@@ -206,8 +223,13 @@ void MainWindow::memoryMinusClicked()
 }
 
 
+<<<<<<< HEAD
 >>>>>>> 3e5ebfd (ВЫНЕСЕНА бизнес-логика)
 // Математические операции
+=======
+
+/*=========== Кнопки действий ==========*/
+>>>>>>> 0e2108a (прибрался. waitingForOperrand - рудимент?)
 void MainWindow::binaryClicked()
 {
     QPushButton* button = qobject_cast<QPushButton*>(sender());
@@ -246,22 +268,21 @@ void MainWindow::unaryClicked()
     }
 }
 
-void MainWindow::resultClicked()
+void MainWindow::resultClicked() try  // нежелательно применять function-try так. Просто попробовал...
 {
-    try {
-        double result = calculate(this->previousNumber, ui->le_display->text().toDouble(), this->currentOperator.toStdString());
+    double result = calculate(this->previousNumber, ui->le_display->text().toDouble(), this->currentOperator.toStdString());
 
-        ui->le_display->setText(toDisplayFormat(result));
-    }
-    catch (const std::logic_error& e) {
-        logicErrorAction(e.what());
-        return;
-    }
+    ui->le_display->setText(toDisplayFormat(result));
 
     this->previousNumber = 0;
     this->waitingForOperand = true;
     this->currentOperator = "";
 }
+catch (const std::logic_error& e) {
+    logicErrorAction(e.what());
+    return;
+}
+
 
 
 MainWindow::~MainWindow()
